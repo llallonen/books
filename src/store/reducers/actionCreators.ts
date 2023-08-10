@@ -1,16 +1,17 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { AppDispatch } from "../store";
+import { booksSlice } from "./booksSlice";
 
-export const fetchBooks = createAsyncThunk(
-  "books/fetchAll",
-  async (_, thunkAPI) => {
-    try {
-      const response = await axios.get(
-        "https://www.googleapis.com/books/v1/volumes?q=subject:fiction"
-      );
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue("An error occurred while loading books");
+export const fetchBooks = async (dispatch: AppDispatch) => {
+  try {
+    dispatch(booksSlice.actions.booksFetching());
+    const response = await axios.get(
+      "https://www.googleapis.com/books/v1/volumes?q=subject:fiction"
+    );
+    dispatch(booksSlice.actions.booksFetchingSucces(response.data));
+  } catch (e) {
+    if (e instanceof Error) {
+      dispatch(booksSlice.actions.booksFetchingError(e.message));
     }
   }
-);
+};

@@ -4,7 +4,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Center,
   Flex,
   Heading,
   Image,

@@ -1,6 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IBooks } from "../../models/IBooks";
-import { fetchBooks } from "./actionCreators";
 
 interface BooksState {
   books: IBooks;
@@ -9,34 +8,32 @@ interface BooksState {
 }
 
 const initialState: BooksState = {
+  isLoading: false,
   books: {
-    kind: "books#volumes",
-    totalItems: 200,
+    kind: "string",
+    totalItems: 0,
     items: [],
   },
-  isLoading: false,
   error: "",
 };
-
-const fetch = fetchBooks;
 
 export const booksSlice = createSlice({
   name: "books",
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetch.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = "не удалось";
-      })
-      .addCase(fetch.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.books = action.payload;
-      })
-      .addDefaultCase((state, action) => {
-        console.log("ничего не происходит");
-      });
+  reducers: {
+    booksFetching(state) {
+      state.isLoading = true;
+    },
+    booksFetchingSucces(state, action: PayloadAction<IBooks>) {
+      state.isLoading = false;
+      state.error = '';
+      state.books = action.payload;
+    },
+
+    booksFetchingError(state, action: PayloadAction<string>) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 

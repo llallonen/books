@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { IBook } from "../models/IBook";
 import { IBooks } from "../models/IBooks";
 
 export const bookApi = createApi({
@@ -7,7 +6,7 @@ export const bookApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://www.googleapis.com/books/" }),
   tagTypes: ["Book"],
   endpoints: (build) => ({
-    fetchAllPosts: build.query<IBooks, string>({
+    fetchAllBooks: build.query<IBooks, string>({
       query: (query: string = "subject:fiction") => ({
         url: `/v1/volumes`,
         params: {
@@ -15,5 +14,16 @@ export const bookApi = createApi({
         },
       }),
     }),
+    fetchBySearch: build.query({
+      query: (search: string = 'pushkin') => ({
+        url: `/v1/volumes`,
+        params: {
+            q: search
+        }
+      }),
+    }),
   }),
 });
+
+
+export const { useFetchAllBooksQuery, useFetchBySearchQuery } = bookApi
