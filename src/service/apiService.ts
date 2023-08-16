@@ -7,7 +7,7 @@ export const bookApi = createApi({
   tagTypes: ["Book"],
   endpoints: (build) => ({
     fetchAllBooks: build.query<IBooks, string>({
-      query: (query: string = "subject:fiction") => ({
+      query: (query = "subject:pushkin") => ({
         url: `/v1/volumes`,
         params: {
           q: query,
@@ -15,10 +15,10 @@ export const bookApi = createApi({
       }),
     }),
     fetchBySearch: build.query({
-      query: (search: string = 'pushkin') => ({
+      query: (search = 'pushkin') => ({
         url: `/v1/volumes`,
         params: {
-            q: search
+            q: search = 'pushkin',
         }
       }),
     }),

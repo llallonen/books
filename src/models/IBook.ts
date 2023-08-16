@@ -19,9 +19,9 @@ export interface IBook {
     printType: "BOOK";
     categories: string[];
     maturityRating: string;
-    imageLinks: {
-      smallThumbnail: string;
-      thumbnail: string;
+    imageLinks?: {
+      smallThumbnail?: string;
+      thumbnail?: string;
     };
     previewLink: string;
     infoLink: string;

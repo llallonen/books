@@ -1,19 +1,24 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "./hooks/redux";
-import { fetchBooks } from "./store/reducers/ActionCreators";
+import { useState } from "react";
 import Books from "./components/Books";
+import Search from "./components/Search";
+import { useFetchBooks } from "./hooks/useFetchBooks";
 
 const App = () => {
-const { books } = useAppSelector((state) => state.booksReducer);
-  const dispatch = useAppDispatch();
+  const [searchValue, setSearchValue] = useState<string>("fire");
 
-  useEffect(() => {
-    dispatch(fetchBooks)
-  }, [])
+  const inputHandle = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    if (e.target) {
+      setSearchValue(e.target.value);
+    }
+  };
+
+  const data = useFetchBooks(searchValue);
 
   return (
     <>
-      <Books />
+      <Search searchValue={searchValue} onChange={inputHandle} />
+      <Books items={data.items} />
     </>
   );
 };

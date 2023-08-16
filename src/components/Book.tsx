@@ -9,6 +9,7 @@ import {
   Image,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useFetchAllBooksQuery } from "../service/apiService";
 
 interface BookProps {
   bookData: IBook;
@@ -32,7 +33,7 @@ const Book: FC<BookProps> = ({ bookData }) => {
             display={"flex"}
             w={"max"}
             h={250}
-            src={book.imageLinks.thumbnail}
+            src={book.imageLinks ? book.imageLinks.thumbnail : ''}
             alt={book.title}
             borderRadius="lg"
           />

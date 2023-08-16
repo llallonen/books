@@ -1,34 +1,21 @@
 import { Flex } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { IBook } from "../../src/models/IBook";
-import { useFetchAllBooksQuery } from "../service/apiService";
-import { fetchBooks } from "../store/reducers/ActionCreators";
-import { AppDispatch } from "../store/store";
+import { IBooks } from "../models/IBooks";
 import Book from "./Book";
+import { IBook } from "../models/IBook";
 
-const Books = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, error, data } = useFetchAllBooksQuery("fiction");
-  const [ booksData, setBookData ] = useState([] as Array<IBook>);
+interface IBooksProps {
+  items: Array<IBook>
+}
 
-  useEffect(() => {
-    dispatch(fetchBooks);
-    console.log(data?.items);
-    if (data) {
-      setBookData(data?.items);
-    } else {
-      console.log("gde dannye");
-    }
-  }, [data]);
+const Books = (props: IBooksProps) => {
+  const books = props.items;
+  console.log(books)
 
   return (
     <div>
-      {isLoading && <h1>Идет загрузка...</h1>}
-      {error && <h1>Произошла ошибка при загрузке</h1>}
       <Flex wrap="wrap" justifyContent="space-between">
-        {booksData &&
-          booksData.map((item) => <Book bookData={item} key={item.id} />)}
+        {books.length &&
+          books.map((item) => <Book bookData={item} key={item.id} />)}
       </Flex>
     </div>
   );
