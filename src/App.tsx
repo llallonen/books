@@ -23,7 +23,7 @@ export interface IQueryState {
 
 const App = () => {
   const [searchValue, setSearchValue] = useState<IQueryState>({
-    query: "pushkin",
+    query: "Pushkin",
     category: "Biography",
     sort: "Relevance",
   });
@@ -43,7 +43,12 @@ const App = () => {
     e.preventDefault();
 
     if (e.target) {
-      console.log(searchValue);
+      const value = e.target.value as ICategory;
+
+      setSearchValue((searchValue) => ({
+        ...searchValue,
+        category: value,
+      }));
     }
   };
 
@@ -51,7 +56,7 @@ const App = () => {
 
   return (
     <>
-      <Search searchValue='pushkin' onChange={inputHandle} />
+      <Search searchValue={searchValue.query} onChange={inputHandle} />
       <CategorySelector onChange={selectHandle} />
       <Books items={data.items} />
     </>

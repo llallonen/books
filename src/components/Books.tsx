@@ -14,7 +14,7 @@ const Books = (props: IBooksProps) => {
   return (
     <div>
       <Flex wrap="wrap" justifyContent="space-between">
-        {books.length &&
+        {books.length > 0 &&
           books.map((item) => <Book bookData={item} key={item.id} />)}
       </Flex>
     </div>
