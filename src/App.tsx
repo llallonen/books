@@ -3,7 +3,7 @@ import Books from "./components/Books";
 import Search from "./components/Search";
 import { useFetchBooks } from "./hooks/useFetchBooks";
 import CategorySelector from "./components/CategorySelector";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Spinner } from "@chakra-ui/react";
 import SortingSelector from "./components/SortingSelector";
 
 export type ICategory =
@@ -56,16 +56,19 @@ const App = () => {
 
   const sortSelectHandle = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     e.preventDefault();
-    if (e.target) {
+     if (e.target) {
       const value = e.target.value as ISort;
       setSearchValue((searchValue) => ({
         ...searchValue,
-        sort: value,
-      }));
-    }
-  };
+        sort: value
+      }))
+     }
+  }
 
   const data = useFetchBooks(searchValue);
+  const booksData = data.data;
+  const isLoading = data.isLoading;
+  console.log(isLoading)
 
   return (
     <>
@@ -74,7 +77,8 @@ const App = () => {
         <CategorySelector onChange={catSelectHandle} />
         <SortingSelector onChange={sortSelectHandle} />
       </Flex>
-      <Books items={data.items} />
+    {isLoading && <Spinner />}
+      {booksData && <Books items={booksData.items} /> }
     </>
   );
 };

@@ -1,5 +1,3 @@
-import { FC } from "react";
-import { IBook } from "../models/IBook";
 import {
   Card,
   CardBody,
@@ -9,7 +7,8 @@ import {
   Image,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useFetchAllBooksQuery } from "../service/apiService";
+import { FC } from "react";
+import { IBook } from "../models/IBook";
 
 interface BookProps {
   bookData: IBook;
