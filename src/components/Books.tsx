@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
-import { IBooks } from "../models/IBooks";
-import Book from "./Book";
 import { IBook } from "../models/IBook";
+import Book from "./Book";
+import Error from "./Error";
 
 interface IBooksProps {
   items: Array<IBook>

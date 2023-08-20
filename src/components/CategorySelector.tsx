@@ -3,13 +3,13 @@ import React, { ChangeEvent } from "react";
 
 const CategorySelector = ({onChange}: {onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void}) => {
   const categories = [
-    "all",
-    "art",
-    "biography",
-    "computers",
-    "history",
-    "medical",
-    "poetry",
+    "All",
+    "Art",
+    "Biography",
+    "Computers",
+    "History",
+    "Medical",
+    "Poetry",
   ];
 
   return (
