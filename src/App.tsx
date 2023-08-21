@@ -3,7 +3,7 @@ import Books from "./components/Books";
 import Search from "./components/Search";
 import { useFetchBooks } from "./hooks/useFetchBooks";
 import CategorySelector from "./components/CategorySelector";
-import { Flex, Spinner } from "@chakra-ui/react";
+import { Button, Flex, Spinner } from "@chakra-ui/react";
 import SortingSelector from "./components/SortingSelector";
 
 export type ICategory =
@@ -21,6 +21,7 @@ export interface IQueryState {
   query: string;
   category: ICategory;
   sort: ISort;
+  index: number;
 }
 
 const App = () => {
@@ -28,7 +29,12 @@ const App = () => {
     query: "Pushkin",
     category: "Biography",
     sort: "Relevance",
+    index: 0,
   });
+
+  const data = useFetchBooks(searchValue);
+  const booksData = data.data;
+  const isLoading = data.isLoading;
 
   const inputHandle = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -56,19 +62,23 @@ const App = () => {
 
   const sortSelectHandle = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     e.preventDefault();
-     if (e.target) {
+    if (e.target) {
       const value = e.target.value as ISort;
       setSearchValue((searchValue) => ({
         ...searchValue,
-        sort: value
-      }))
-     }
-  }
+        sort: value,
+      }));
+    }
+  };
 
-  const data = useFetchBooks(searchValue);
-  const booksData = data.data;
-  const isLoading = data.isLoading;
-  console.log(isLoading)
+  const moreBtnHandle = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    console.log('click')
+    setSearchValue((searchValue) => ({
+      ...searchValue,
+      index: searchValue.index + 16
+    }));
+  };
 
   return (
     <>
@@ -77,8 +87,11 @@ const App = () => {
         <CategorySelector onChange={catSelectHandle} />
         <SortingSelector onChange={sortSelectHandle} />
       </Flex>
-    {isLoading && <Spinner />}
-      {booksData && <Books items={booksData.items} /> }
+      {isLoading && <Spinner />}
+      {booksData && <Books items={booksData.items} />}
+      <Flex justifyContent="center">
+        <Button colorScheme="blue" onClick={moreBtnHandle}>Load more</Button>
+      </Flex>
     </>
   );
 };
