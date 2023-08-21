@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IBooks } from "../models/IBooks";
-import { ICategory, ISort } from "../App";
+import { ICategory } from "../models/ICategory";
+import { ISort } from "../models/ISort";
 
 export const bookApi = createApi({
   reducerPath: "booksApi",
@@ -23,6 +24,7 @@ export const bookApi = createApi({
         index: number
       }) => `v1/volumes?q=${query}+subject:${category}&maxResults=16&startIndex=${index}&orderBy=${sort}`,
       serializeQueryArgs: ({ endpointName }) => {
+        console.log('hui')
         return endpointName;
       },
       merge: (currentCache, newItems) => {

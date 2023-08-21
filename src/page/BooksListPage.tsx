@@ -1,30 +1,15 @@
-import { useState } from "react";
-import Books from "./components/Books";
-import Search from "./components/Search";
-import { useFetchBooks } from "./hooks/useFetchBooks";
-import CategorySelector from "./components/CategorySelector";
 import { Button, Flex, Spinner } from "@chakra-ui/react";
-import SortingSelector from "./components/SortingSelector";
+import { useState } from "react";
+import Books from "../components/Books";
+import CategorySelector from "../components/CategorySelector";
+import Search from "../components/Search";
+import SortingSelector from "../components/SortingSelector";
+import { useFetchBooks } from "../hooks/useFetchBooks";
+import { ICategory } from "../models/ICategory";
+import { IQueryState } from "../models/IQueryState";
+import { ISort } from "../models/ISort";
 
-export type ICategory =
-  | "All"
-  | "Art"
-  | "Biography"
-  | "Computers"
-  | "History"
-  | "Medical"
-  | "Poetry";
-
-export type ISort = "Relevance" | "Newest";
-
-export interface IQueryState {
-  query: string;
-  category: ICategory;
-  sort: ISort;
-  index: number;
-}
-
-const App = () => {
+const BooksListPage = () => {
   const [searchValue, setSearchValue] = useState<IQueryState>({
     query: "Pushkin",
     category: "Biography",
@@ -32,13 +17,9 @@ const App = () => {
     index: 0,
   });
 
-  const data = useFetchBooks(searchValue);
-  const booksData = data.data;
-  const isLoading = data.isLoading;
-
   const inputHandle = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-
+    console.log(e.target.value)
     if (e.target) {
       setSearchValue((searchValue) => ({
         ...searchValue,
@@ -49,7 +30,7 @@ const App = () => {
 
   const catSelectHandle = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     e.preventDefault();
-
+    console.log('category')
     if (e.target) {
       const value = e.target.value as ICategory;
 
@@ -62,6 +43,7 @@ const App = () => {
 
   const sortSelectHandle = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     e.preventDefault();
+    console.log('sort')
     if (e.target) {
       const value = e.target.value as ISort;
       setSearchValue((searchValue) => ({
@@ -73,12 +55,16 @@ const App = () => {
 
   const moreBtnHandle = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    console.log('click')
+    console.log("click");
     setSearchValue((searchValue) => ({
       ...searchValue,
-      index: searchValue.index + 16
+      index: searchValue.index + 16,
     }));
   };
+
+  const data = useFetchBooks(searchValue);
+  const booksData = data.data;
+  const isLoading = data.isLoading;
 
   return (
     <>
@@ -90,10 +76,13 @@ const App = () => {
       {isLoading && <Spinner />}
       {booksData && <Books items={booksData.items} />}
       <Flex justifyContent="center">
-        <Button colorScheme="blue" onClick={moreBtnHandle}>Load more</Button>
+        <Button colorScheme="blue" onClick={moreBtnHandle}>
+          Load more
+        </Button>
       </Flex>
     </>
   );
 };
 
-export default App;
+
+export default BooksListPage;

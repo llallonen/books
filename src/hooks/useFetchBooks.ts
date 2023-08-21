@@ -1,8 +1,8 @@
 import { SerializedError } from "@reduxjs/toolkit";
-import { IQueryState } from "../App";
 import { IBooks } from "../models/IBooks";
 import { useFetchAllBooksQuery } from "../service/apiService";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { IQueryState } from "../models/IQueryState";
 
 interface IUseFetchBooksReturnValue {
   isLoading: boolean;
