@@ -1,7 +1,7 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import booksReducer from "./reducers/booksSlice";
 import { bookApi } from "../service/apiService";
+import booksReducer from "./reducers/booksSlice";
 
 const rootReducer = combineReducers({
   booksReducer,

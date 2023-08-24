@@ -58,7 +58,7 @@ const BooksListPage = () => {
     console.log("click");
     setSearchValue((searchValue) => ({
       ...searchValue,
-      index: searchValue.index + 16,
+      index: searchValue.index + 8,
     }));
   };
 
@@ -80,6 +80,7 @@ const BooksListPage = () => {
           Load more
         </Button>
       </Flex>
+      {/* <Button onClick={handleRefetch}>refetch</Button> */}
     </>
   );
 };

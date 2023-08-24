@@ -1,8 +1,8 @@
 import { SerializedError } from "@reduxjs/toolkit";
-import { IBooks } from "../models/IBooks";
-import { useFetchAllBooksQuery } from "../service/apiService";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { IBooks } from "../models/IBooks";
 import { IQueryState } from "../models/IQueryState";
+import { useFetchAllBooksQuery } from "../service/apiService";
 
 interface IUseFetchBooksReturnValue {
   isLoading: boolean;
@@ -10,8 +10,12 @@ interface IUseFetchBooksReturnValue {
   data?: IBooks;
 }
 
-export const useFetchBooks = (query: IQueryState): IUseFetchBooksReturnValue => {
-  const { isLoading, error, data } = useFetchAllBooksQuery(query);
+export const useFetchBooks = (
+  query: IQueryState
+): IUseFetchBooksReturnValue => {
+  const { isLoading, error, data } = useFetchAllBooksQuery(query, {
+    refetchOnMountOrArgChange: true,
+  });
 
   if (data) {
     return { isLoading, error, data };
@@ -20,6 +24,6 @@ export const useFetchBooks = (query: IQueryState): IUseFetchBooksReturnValue => 
   return {
     isLoading,
     error,
-    data
-  }
+    data,
+  };
 };
