@@ -1,15 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
-import BooksListPage from "../page/BooksListPage";
 import BookPage from "../page/BookPage";
+import BooksListPage from "../page/BooksListPage";
+import Layout from "../page/Layout";
+import ErrorPage from "../page/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <BooksListPage />,
-    //errorElement: <ErrorPage />,
+    element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <BooksListPage /> },
-      { path: "/:book", element: <BookPage /> },
+      { path: "/:bookId", element: <BookPage /> },
     ],
   },
 ]);

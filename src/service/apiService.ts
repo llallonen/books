@@ -1,23 +1,11 @@
 import {
-  FetchBaseQueryMeta,
   createApi,
-  fetchBaseQuery,
+  fetchBaseQuery
 } from "@reduxjs/toolkit/query/react";
+import { IBook } from "../models/IBook";
 import { IBooks } from "../models/IBooks";
 import { ICategory } from "../models/ICategory";
 import { ISort } from "../models/ISort";
-
-interface IReq {
-  arg: {
-    query: string;
-    category: ICategory;
-    sort: ISort;
-    index: number;
-  };
-  baseQueryMeta: FetchBaseQueryMeta | undefined;
-  requestId: string;
-  fulfilledTimeStamp: number;
-}
 
 export const bookApi = createApi({
   reducerPath: "booksApi",
@@ -45,15 +33,17 @@ export const bookApi = createApi({
         const { query, category, sort } = queryArgs;
         return { query, category, sort };
       },
-      merge: (currentCache: IBooks, newItems: IBooks, previousArg) => {
-        console.log(previousArg.arg);
+      merge: (currentCache: IBooks, newItems: IBooks) => {
         currentCache.items.push(...newItems.items);
       },
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
       },
     }),
+    fetchAOneBook: build.query<IBook, string>({
+      query: (bookId: string) => `v1/volumes/${bookId}`,
+    }),
   }),
 });
 
-export const { useFetchAllBooksQuery } = bookApi;
+export const { useFetchAllBooksQuery, useFetchAOneBookQuery } = bookApi;

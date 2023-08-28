@@ -1,4 +1,4 @@
-import { Button, Flex, Spinner } from "@chakra-ui/react";
+import { Box, Button, Flex, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import Books from "../components/Books";
 import CategorySelector from "../components/CategorySelector";
@@ -55,7 +55,6 @@ const BooksListPage = () => {
 
   const moreBtnHandle = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    console.log("click");
     setSearchValue((searchValue) => ({
       ...searchValue,
       index: searchValue.index + 8,
@@ -74,13 +73,15 @@ const BooksListPage = () => {
         <SortingSelector onChange={sortSelectHandle} />
       </Flex>
       {isLoading && <Spinner />}
+      <Box px={5}>
+
       {booksData && <Books items={booksData.items} />}
+      </Box>
       <Flex justifyContent="center">
         <Button colorScheme="blue" onClick={moreBtnHandle}>
           Load more
         </Button>
       </Flex>
-      {/* <Button onClick={handleRefetch}>refetch</Button> */}
     </>
   );
 };
