@@ -1,16 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { IBooksState } from "../../models/IBooksState";
 import { IQueryState } from "../../models/IQueryState";
-import { AppDispatch } from "../store";
+import axios from "axios";
 
-interface IThunkApi {
-  dispatch: AppDispatch,
-  state: IBooksState,
-}
-
-export const fetchBooks = createAsyncThunk(
-  "books",
+export const fetchMoreBooks = createAsyncThunk(
+  "moreBooks",
   async (searchValue: IQueryState, thunkAPI) => {
     const { query, category, sort, index } = searchValue;
     try {
