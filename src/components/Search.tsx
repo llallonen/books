@@ -3,7 +3,7 @@ import { ChangeEvent } from "react";
 
 const Search = ({searchValue, onChange}:{searchValue: string, onChange: (e: ChangeEvent<HTMLInputElement>) => void}) => {
 
-  return <Input placeholder="Basic usage" value={searchValue} onChange={onChange} />;
+  return <Input placeholder="Search..." value={searchValue} onChange={onChange} />;
 };
 
 export default Search;

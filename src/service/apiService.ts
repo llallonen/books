@@ -1,7 +1,4 @@
-import {
-  createApi,
-  fetchBaseQuery
-} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IBook } from "../models/IBook";
 import { IBooks } from "../models/IBooks";
 import { ICategory } from "../models/ICategory";
@@ -12,6 +9,7 @@ export const bookApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://www.googleapis.com/books/" }),
   tagTypes: ["Book"],
   refetchOnMountOrArgChange: true,
+  refetchOnReconnect: true,
   endpoints: (build) => ({
     fetchAllBooks: build.query<
       IBooks,
@@ -29,6 +27,7 @@ export const bookApi = createApi({
         index: number;
       }) =>
         `v1/volumes?q=${query}+subject:${category}&maxResults=8&startIndex=${index}&orderBy=${sort}`,
+      providesTags: ["Book"],
       serializeQueryArgs: ({ queryArgs }) => {
         const { query, category, sort } = queryArgs;
         return { query, category, sort };
@@ -38,10 +37,13 @@ export const bookApi = createApi({
       },
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
-      },
+      }
     }),
     fetchAOneBook: build.query<IBook, string>({
       query: (bookId: string) => `v1/volumes/${bookId}`,
+      serializeQueryArgs: (queryArgs) => {
+        return queryArgs;
+      },
     }),
   }),
 });

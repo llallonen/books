@@ -8,16 +8,15 @@ import { Button, Flex, FormControl } from "@chakra-ui/react";
 import Search from "./Search";
 import CategorySelector from "./CategorySelector";
 import SortingSelector from "./SortingSelector";
+import { useDispatch } from "react-redux";
 
 const BooksSearchForm = () => {
-  const [searchValue, setSearchValue] = useState<IQueryState>({
-    query: "Hölderlin",
-    category: "All",
-    sort: "Relevance",
-    index: 0,
-  });
-
   const dispatch = useAppDispatch();
+  const { books, isLoading, error, search } = useAppSelector(
+    (state) => state.booksReducer
+  );
+
+  const [searchValue, setSearchValue] = useState<IQueryState>(search);
 
   // const booksData = useFetchBooks(searchValue);
   // const books = booksData.data;
@@ -67,14 +66,14 @@ const BooksSearchForm = () => {
         <Search searchValue={searchValue.query} onChange={inputHandle} />
       </FormControl>
       <Flex>
-        <FormControl>
+        <FormControl mb={5}>
           <CategorySelector onChange={catSelectHandle} />
         </FormControl>
         <FormControl>
           <SortingSelector onChange={sortSelectHandle} />
         </FormControl>
       </Flex>
-      <Button type="submit">Searchh</Button>
+      <Button type="submit" display='block' mx={'auto'} mt={6}>Search</Button>
     </form>
   );
 };

@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@redux-devtools/core": "^3.13.1",
     "eslint-plugin-react-refresh": "^0.4.3"
   },
   "overrides": {

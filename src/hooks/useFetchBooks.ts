@@ -14,7 +14,7 @@ export const useFetchBooks = (
   query: IQueryState
 ): IUseFetchBooksReturnValue => {
   const { isLoading, error, data } = useFetchAllBooksQuery(query, {
-    refetchOnMountOrArgChange: true,
+    refetchOnMountOrArgChange: false,
   });
 
   if (data) {

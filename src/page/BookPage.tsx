@@ -1,5 +1,5 @@
 import {
-  Box,
+  Badge,
   Card,
   CardBody,
   CardHeader,
@@ -15,24 +15,55 @@ const BookPage = () => {
   const location = useLocation();
   const path = location.pathname.substring(1);
   const { data, isLoading, error } = useFetchAOneBook(path);
+  const bookData = data?.volumeInfo;
+  const categories = data?.volumeInfo.categories;
+  const description = bookData?.description
+    ? bookData?.description
+    : "Unfortunately there is no description for this book.";
 
   return (
     <div>
-      <Card>
-        <Flex>
+      <Card maxW={"80%"} m={[0, "auto"]}>
+        <Flex
+          alignItems={{ md: "center", lg: "flex-start" }}
+          flexDirection={{ md: "column", lg: "row" }}
+        >
           <CardHeader>
-            <Heading as="h1" size="xl" noOfLines={1}>
-              {data?.volumeInfo.title}
-            </Heading>
-            <Heading as="h2" size="lg" noOfLines={1}>
-              {data?.volumeInfo.authors}
-            </Heading>
             <Image
-              src={data?.volumeInfo.imageLinks ? data?.volumeInfo.imageLinks.thumbnail : ""}
+              boxShadow="lg"
+              p="6"
+              rounded="md"
+              bg="white"
+              src={bookData?.imageLinks ? bookData?.imageLinks.thumbnail : ""}
+              w={[100, 200, 300]}
             ></Image>
           </CardHeader>
           <CardBody>
-            <Text>{data?.volumeInfo.description}</Text>
+            <Flex>
+              {categories?.map((cat) => (
+                <Badge key={cat}>{cat}</Badge>
+              ))}
+            </Flex>
+            <Heading
+              as="h1"
+              size="xl"
+              noOfLines={1}
+              marginBottom={{ md: 3, lg: 10 }}
+            >
+              {bookData?.title}
+            </Heading>
+            <Heading
+              as="h2"
+              size="lg"
+              fontWeight={400}
+              noOfLines={1}
+              marginBottom={{ md: 2, lg: 4 }}
+            >
+              {bookData?.authors}
+            </Heading>
+            <Text>
+              {description}
+            </Text>
           </CardBody>
         </Flex>
       </Card>
