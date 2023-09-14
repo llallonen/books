@@ -2,15 +2,14 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Flex,
   Heading,
   Image,
   Text,
-  useColorModeValue,
+  useColorModeValue
 } from "@chakra-ui/react";
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { IBook } from "../models/IBook";
-import { Link, useParams } from "react-router-dom";
 
 interface BookProps {
   bookData: IBook;
@@ -19,14 +18,8 @@ interface BookProps {
 const Book: FC<BookProps> = ({ bookData }) => {
   const book = bookData.volumeInfo;
   const bg = useColorModeValue("gray.100", "gray.600");
-  const title =
-    book.title?.length > 35
-      ? book.title?.slice(0, 35).concat("...")
-      : book.title;
-  const authors =
-    book.authors?.length > 1
-      ? book.authors?.join(", ").slice(0, 35).concat("...")
-      : book.authors;
+  const title = book.title;
+  const authors = book.authors;
 
   return (
     <Card className="book" w="22%" h="320px" bg={bg} alignItems="center" my={5}>
@@ -42,13 +35,12 @@ const Book: FC<BookProps> = ({ bookData }) => {
           />
         </CardHeader>
         <CardBody height={"30%"} p={0} textAlign={'center'}>
-            <Heading as="h2" size="md" p={0} h={'50%'} textAlign={"center"} mb={2}>
+            <Heading as="h2" size="md" p={0} h={'55%'} textAlign={"center"} mb={3} className="card__title">
               {title}
             </Heading>
-            <Text p={0} color="gray.600" fontWeight={2} h={'50%'}>
+            <Text p={0} color="gray.600" fontWeight={2} h={'45%'} className="card__subtitle">
               {authors}
             </Text>
-
         </CardBody>
       </Link>
     </Card>

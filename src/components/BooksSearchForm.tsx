@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { IQueryState } from "../models/IQueryState";
-import { fetchBooks } from "../store/actionCreators./fetchBooks";
-import { ISort } from "../models/ISort";
-import { ICategory } from "../models/ICategory";
 import { Button, Flex, FormControl } from "@chakra-ui/react";
-import Search from "./Search";
+import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { ICategory } from "../models/ICategory";
+import { IQueryState } from "../models/IQueryState";
+import { ISort } from "../models/ISort";
+import { fetchBooks } from "../store/actionCreators./fetchBooks";
 import CategorySelector from "./CategorySelector";
+import Search from "./Search";
 import SortingSelector from "./SortingSelector";
-import { useDispatch } from "react-redux";
 
 const BooksSearchForm = () => {
   const dispatch = useAppDispatch();
@@ -17,10 +16,6 @@ const BooksSearchForm = () => {
   );
 
   const [searchValue, setSearchValue] = useState<IQueryState>(search);
-
-  // const booksData = useFetchBooks(searchValue);
-  // const books = booksData.data;
-  // const isLoading = booksData.isLoading;
 
   const inputHandle = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -73,7 +68,9 @@ const BooksSearchForm = () => {
           <SortingSelector onChange={sortSelectHandle} />
         </FormControl>
       </Flex>
-      <Button type="submit" display='block' mx={'auto'} mt={6}>Search</Button>
+      <Button type="submit" display="block" mx={"auto"} mt={6}>
+        Search
+      </Button>
     </form>
   );
 };

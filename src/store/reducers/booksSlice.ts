@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IBooksState } from "../../models/IBooksState";
 import { fetchBooks } from "../actionCreators./fetchBooks";
+import { fetchMoreBooks } from "../actionCreators./fetchMoreBooks";
 
 const initialState: IBooksState = {
   isLoading: false,
@@ -10,7 +11,7 @@ const initialState: IBooksState = {
     items: [],
   },
   error: "",
-  search: {query: '', category: 'Art', sort: 'Relevance', index: 0}
+  search: { query: "", category: "Art", sort: "Relevance", index: 0 },
 };
 
 export const booksSlice = createSlice({
@@ -22,6 +23,7 @@ export const booksSlice = createSlice({
       .addCase(fetchBooks.fulfilled, (state, action) => {
         state.isLoading = false;
         state.books = action.payload;
+        state.search = action.meta.arg;
       })
       .addCase(fetchBooks.pending, (state, action) => {
         state.isLoading = true;
@@ -29,6 +31,11 @@ export const booksSlice = createSlice({
       .addCase(fetchBooks.rejected, (state, action) => {
         state.isLoading = false;
         state.error = "error";
+      })
+      .addCase(fetchMoreBooks.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.search = action.meta.arg;
+        state.books.items = [...state.books.items, ...action.payload.items];
       });
   },
 });

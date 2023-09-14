@@ -2,7 +2,7 @@ import { Box, Button, Flex, Spinner } from "@chakra-ui/react";
 import Books from "../components/Books";
 import BooksSearchForm from "../components/BooksSearchForm";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { fetchBooks } from "../store/actionCreators./fetchBooks";
+import { fetchMoreBooks } from "../store/actionCreators./fetchMoreBooks";
 
 const BooksListPage = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ const BooksListPage = () => {
 
   const moreBtnHandle = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    dispatch(fetchBooks({query: 'Hegel', category: 'Poetry', sort: 'Relevance', index: 1}));
+    dispatch(fetchMoreBooks({ ...search, index: search.index + 4 }));
     console.log(search);
   };
 
